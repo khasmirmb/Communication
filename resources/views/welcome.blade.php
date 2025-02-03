@@ -1,5 +1,7 @@
-@include('partials.header')
+@extends('layouts.app')
 
-    
+@section('content')
 
-@include('partials.footer')
+    @include('auth.login')
+
+@endsection
