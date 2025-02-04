@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Namu\WireChat\Traits\Chatable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use Chatable;
 
     /**
      * The attributes that are mass assignable.
@@ -55,5 +57,11 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin"][$value],
 
         );
+    }
+
+    public function canCreateChats(): bool
+    {
+
+     return true;
     }
 }

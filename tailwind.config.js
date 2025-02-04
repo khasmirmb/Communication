@@ -9,6 +9,8 @@ export default {
         './resources/**/*.js',
         './resources/**/*.vue',
         "./node_modules/flowbite/**/*.js",
+        './vendor/namu/wirechat/resources/views/**/*.blade.php',
+        './vendor/namu/wirechat/src/Livewire/**/*.php',
     ],
     theme: {
         extend: {
