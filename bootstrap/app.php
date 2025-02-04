@@ -16,6 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'user-access' => \App\Http\Middleware\UserAccess::class,
         ]);
     })
+
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            'sms/inbound'
+        ]);
+    })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

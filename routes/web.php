@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\SMSController;
+use App\Http\Controllers\InboundSMSController;
 
 Auth::routes();
 
@@ -24,6 +25,11 @@ Route::get('/', function () {
 
     return view('welcome');
 });
+
+
+Route::get('/sms/compose', [SMSController::class, 'showForm'])->name('sms.form');
+
+Route::post('/send-sms', [SMSController::class, 'sendSMS'])->name('sms.send');
 
 
 // User Side Routes
