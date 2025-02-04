@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CallController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -29,7 +30,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/inbound-sms', [SmsController::class, 'receiveSms']); // Twilio webhook - doesn't need auth
+
+
+// Webhooks // Twilio webhook - doesn't need auth
+Route::post('/inbound-sms', [SmsController::class, 'receiveSms']);
+
+Route::post('/inbound-call', [CallController::class, 'receiveCall']);
+
 
 // Protect routes with 'auth' middleware
 Route::middleware(['auth'])->group(function () {
@@ -39,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/send-sms', [SmsController::class, 'sendSMS'])->name('sms.send');
 
     Route::get('/sms', [SmsController::class, 'showInbox'])->name('sms.inbox');
+
+    Route::get('/call/dial', [CallController::class, 'showDialpadForm'])->name('call.form');
 });
 
 
