@@ -39,4 +39,27 @@ class SMSController extends Controller
         }
     }
 
+    public function receiveSms(Request $request)
+    {
+
+        SmsMessage::create([
+            'sender' => $request->input('From'), // Twilio sends the sender's number as "From"
+            'message' => $request->input('Body') // The SMS text content
+        ]);
+
+        // Create a new MessagingResponse object
+        $response = new MessagingResponse();
+
+        // Return the TwiML response
+        return response($response, 200)
+            ->header('Content-Type', 'application/xml');
+    }
+
+    public function showInbox()
+    {
+        $messages = SmsMessage::latest()->paginate(10); // Paginate messages
+
+        return view('sms.index', compact('messages'));
+    }
+
 }

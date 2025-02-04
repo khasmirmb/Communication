@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\InboundSMSController;
+use Twilio\TwiML\MessagingResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 Auth::routes();
 
@@ -26,10 +29,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/inbound-sms', [SmsController::class, 'receiveSms']); // Twilio webhook - doesn't need auth
 
-Route::get('/sms/compose', [SMSController::class, 'showForm'])->name('sms.form');
+// Protect routes with 'auth' middleware
+Route::middleware(['auth'])->group(function () {
 
-Route::post('/send-sms', [SMSController::class, 'sendSMS'])->name('sms.send');
+    Route::get('/sms/compose', [SmsController::class, 'showForm'])->name('sms.form');
+
+    Route::post('/send-sms', [SmsController::class, 'sendSMS'])->name('sms.send');
+
+    Route::get('/sms', [SmsController::class, 'showInbox'])->name('sms.inbox');
+});
 
 
 // User Side Routes
