@@ -35,11 +35,12 @@ Route::get('/', function () {
 // Webhooks // Twilio webhook - doesn't need auth
 Route::post('/inbound-sms', [SmsController::class, 'receiveSms']);
 
-Route::post('/inbound-call', [CallController::class, 'receiveCall']);
-
+Route::post('/inbound-call', [CallController::class, 'receiveCall']); // Web hook for Receive call
 
 // Protect routes with 'auth' middleware
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/token', [CallController::class, 'generateToken']);
 
     Route::get('/sms/compose', [SmsController::class, 'showForm'])->name('sms.form');
 

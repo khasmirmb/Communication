@@ -54,6 +54,26 @@
 
     <main class="container mx-auto p-4">
         @yield('content')
+
+        <!-- Incoming Call Modal (Hidden by default) -->
+        <div id="call-modal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg w-80">
+                <h2 class="text-2xl mb-4">Incoming Call</h2>
+
+                <div class="flex justify-between">
+                    <button id="accept-call" class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600">Accept</button>
+                    <button id="decline-call" class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600">Decline</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call in Progress (Hidden by default) -->
+        <div id="call-in-progress" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg w-80">
+                <h2 class="text-2xl mb-4">Call in Progress</h2>
+                <button id="end-call" class="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 w-full">End Call</button>
+            </div>
+        </div>
     </main>
 
     @livewireScripts
