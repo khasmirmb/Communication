@@ -33,7 +33,7 @@ class SMSController extends Controller
                 ]
             );
 
-            return back()->with('success', 'SMS sent successfully!');
+            return redirect()->route('sms.inbox')->with('success', 'SMS sent successfully!');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }

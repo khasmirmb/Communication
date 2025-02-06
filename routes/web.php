@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CallController;
+use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -39,6 +40,12 @@ Route::post('/inbound-call', [CallController::class, 'receiveCall']); // Web hoo
 
 // Protect routes with 'auth' middleware
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/email', [EmailController::class, 'inbox'])->name('email.inbox');
+
+    Route::get('/email/compose', [EmailController::class, 'compose'])->name('email.compose');
+
+    Route::post('/email/send', [EmailController::class, 'sendEmail'])->name('email.send');
 
     Route::get('/token', [CallController::class, 'generateToken']);
 
