@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->string('message_id')->unique(); // Unique message ID from Mailgun
-            $table->string('from_email'); // Sender email
-            $table->string('from_name')->nullable(); // Sender name
-            $table->string('to_email'); // Recipient email
-            $table->string('subject')->nullable(); // Email subject
-            $table->text('body')->nullable(); // Email body
-            $table->text('html_body')->nullable(); // Email body (HTML)
-            $table->json('attachments')->nullable(); // Store attachments as JSON
+            $table->string('sender');
+            $table->string('subject');
+            $table->text('body');
+            $table->json('attachments')->nullable();  // Store attachments as JSON if needed
             $table->timestamps();
         });
     }

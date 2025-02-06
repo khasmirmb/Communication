@@ -11,17 +11,52 @@
 
     <!-- Inbox List -->
     <div class="mt-6">
-        <!-- Example Email Item -->
-        <div class="border-b py-4">
-            <div class="flex justify-between">
-                <div class="font-semibold">Sender Email</div>
-                <div class="text-sm text-gray-500">Received at: 12:30 PM</div>
-            </div>
-            <div class="mt-2">
-                <p class="text-lg font-medium">Email Subject</p>
-                <p class="text-gray-700">Email preview or message...</p>
-            </div>
-        </div>
+        @if(isset($emailDetails) && count($emailDetails) > 0)
+            @foreach ($emailDetails as $email)
+                <div class="border-b py-4">
+                    <div class="flex justify-between">
+                        <div class="font-semibold">{{ $email['sender'] }}</div>
+                        <div class="text-sm text-gray-500">{{ $email['date'] }}</div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-lg font-medium">{{ $email['subject'] }}</p>
+
+                        <!-- Render snippet as preview -->
+                        @if($email['snippet'])
+                            <p class="text-gray-500">{{ $email['snippet'] }}</p>
+                        @endif
+
+                        <!-- Render the plain text content if available -->
+                        @if($email['plain_text_content'])
+                            <p class="text-gray-700">{{ $email['plain_text_content'] }}</p>
+                        @endif
+
+                        <!-- Render the email content as HTML -->
+                        @if($email['content'])
+                            <p class="text-gray-700">{!! $email['content'] !!}</p>
+                        @endif
+
+                        <!-- Render attachments -->
+                        @if(isset($email['attachments']) && count($email['attachments']) > 0)
+                            <div class="mt-4">
+                                <p class="font-semibold">Attachments:</p>
+                                <ul class="list-disc pl-5">
+                                    @foreach ($email['attachments'] as $attachment)
+                                        <li>
+                                            <a href="{{ route('download.attachment', ['path' => basename($attachment['path'])]) }}" class="text-blue-500 hover:underline">
+                                                {{ $attachment['filename'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <p>No emails found or you're not authorized yet.</p>
+        @endif
     </div>
 </div>
 

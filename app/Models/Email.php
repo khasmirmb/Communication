@@ -9,13 +9,7 @@ class Email extends Model
 {
     use HasFactory;
 
-    protected $table = 'emails';
-
     protected $fillable = [
-        'message_id', 'from_email', 'from_name', 'to_email', 'subject', 'body', 'html_body', 'attachments'
-    ];
-
-    protected $casts = [
-        'attachments' => 'array',
+        'sender', 'subject', 'body', 'attachments'
     ];
 }
